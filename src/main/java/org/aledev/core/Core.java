@@ -3,6 +3,7 @@ package org.aledev.core;
 import lombok.Getter;
 import org.aledev.core.Managers.ProfileManager;
 import org.aledev.core.Managers.SqlManager;
+import org.aledev.core.Models.PlayerData;
 import org.bukkit.plugin.java.JavaPlugin;
 
 

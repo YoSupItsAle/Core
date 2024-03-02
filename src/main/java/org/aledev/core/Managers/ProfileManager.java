@@ -1,15 +1,13 @@
 package org.aledev.core.Managers;
 
 import org.aledev.core.Core;
-import org.aledev.core.Manager;
-import org.aledev.core.Profile;
+import org.aledev.core.Models.Manager;
+import org.aledev.core.Models.Profile;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class ProfileManager extends Manager {
 

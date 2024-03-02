@@ -1,4 +1,5 @@
-package org.aledev.core;
+package org.aledev.core.Models;
+import org.aledev.core.Core;
 import org.aledev.core.Utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,6 +21,7 @@ public class PlayerData implements Listener {
     private String username;
     private Int coins = new Int();
     private Int points = new Int();
+    private Rank rank = Rank.MEMBER;
 
     public PlayerData(){
 
@@ -41,7 +43,7 @@ public class PlayerData implements Listener {
                             player.getName(), player.getUniqueId().toString());
                 }else{
                     Core.getInstance().getSqlManager().execute("INSERT INTO players(uuid, name, coins, points, rank) VALUES (?, ?, ?, ?, ?)",
-                            player.getUniqueId().toString(), player.getName(), 0, 0, "NONE");
+                            player.getUniqueId().toString(), player.getName(), 0, 0, Rank.MEMBER.toString());
                 }
             }catch (SQLException exception){
                 Color.log(Color.main("DEBUG", "There was an error loading player."));

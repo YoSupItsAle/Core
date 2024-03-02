@@ -1,6 +1,7 @@
-package org.aledev.core;
+package org.aledev.core.Models;
 
 import lombok.Getter;
+import org.aledev.core.Core;
 
 import java.util.UUID;
 

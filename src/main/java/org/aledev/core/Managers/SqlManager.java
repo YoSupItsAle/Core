@@ -3,7 +3,7 @@ package org.aledev.core.Managers;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.aledev.core.Core;
-import org.aledev.core.Manager;
+import org.aledev.core.Models.Manager;
 import org.aledev.core.Utils.Color;
 import org.bukkit.Bukkit;
 

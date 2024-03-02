@@ -1,4 +1,4 @@
-package org.aledev.core;
+package org.aledev.core.Models;
 
 public class Int {
 
