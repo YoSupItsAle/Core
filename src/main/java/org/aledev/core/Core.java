@@ -1,31 +1,43 @@
 package org.aledev.core;
 
 import lombok.Getter;
-import org.aledev.core.Managers.SqliteManager;
+import org.aledev.core.Managers.ProfileManager;
+import org.aledev.core.Managers.SqlManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+
 
 public final class Core extends JavaPlugin {
 
     @Getter
-    Core instance;
-    SqliteManager sqliteManager;
+    static Core instance;
+    @Getter
+    SqlManager sqlManager;
+    @Getter
+    ProfileManager profileManager;
 
     @Override
     public void onEnable() {
         instance = this;
         loadManagers();
+        loadListeners();
 
     }
 
     @Override
     public void onDisable() {
-        if(sqliteManager!=null){
-            sqliteManager.shutdown();
+        if(sqlManager !=null){
+            sqlManager.shutdown();
         }
     }
 
     private void loadManagers(){
-        sqliteManager = new SqliteManager(this);
-        sqliteManager.connect();
+        sqlManager = new SqlManager(this);
+        sqlManager.connect();
+        profileManager = new ProfileManager(this);
+    }
+
+    private void loadListeners(){
+        getServer().getPluginManager().registerEvents(new PlayerData(), this);
     }
 }

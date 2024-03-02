@@ -11,11 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SqliteManager extends Manager {
+public class SqlManager extends Manager {
 
     private HikariDataSource hikariDataSource;
 
-    public SqliteManager(Core plugin) {
+    public SqlManager(Core plugin) {
         super(plugin);
         connect();
         Color.log("Enabled SqliteManager");
@@ -41,7 +41,7 @@ public class SqliteManager extends Manager {
      */
     public void createTables(){
         Color.log("Creating tables...");
-        createTable("player", "uuid VARCHAR(36) NOT NULL PRIMARY KEY, name VARCHAR(16), coins INT(11), points INT(11), rank VARCHAR(20)");
+        createTable("players", "uuid VARCHAR(36) NOT NULL PRIMARY KEY, name VARCHAR(16), coins INT(11), points INT(11), rank VARCHAR(20)");
     }
 
     /**
@@ -113,6 +113,7 @@ public class SqliteManager extends Manager {
                 for(int i = 0; i<values.length; i++){
                     statement.setObject((i+1), values[i]);
                 }
+                statement.execute();
             }catch (SQLException exception){
                 Color.log("An error occured while executing an update to the database.");
                 Color.log("Sqlite#execute : " + query);
