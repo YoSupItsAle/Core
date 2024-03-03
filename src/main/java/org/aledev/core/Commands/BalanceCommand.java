@@ -20,12 +20,6 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        //bal
-        //balance <name>
-        //bal set <coins|points> <name> <int>
-        //bal add <coins|points> <name> <int>
-        //bal remove <coins|points> <name> <int>
-
 
 
         if(sender instanceof Player player){
@@ -50,13 +44,13 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
 
                 if (profile.getPlayerData().getRank().isHigherOrEqualTo(player, Rank.ADMIN, true)) {
                     if (args.length < 4) {
-                        player.sendMessage(Color.main("&ECO", "&cUsage: /bal <set|add|remove> <coins|points> <name> <int>"));
+                        player.sendMessage(Color.main("&aECO", "&cUsage: /bal <name> <set|add|remove> <coins|points> <int>"));
                         return true;
                     }
 
-                    String function = args[0];
-                    String currency = args[1];
-                    String targetUsername = args[2];
+                    String function = args[1];
+                    String currency = args[2];
+                    String targetUsername = args[0];
                     int amount;
 
                     //check if amount is actually a number.
@@ -94,12 +88,12 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
                             switch (currency){
                                 case "coins":
                                     targetProfile.getPlayerData().getCoins().increaseAmount(amount);
-                                    player.sendMessage(Color.main("&aECO", "&Added " + amount + " coins to " + targetProfile.getUsername() + "'s balance."));
+                                    player.sendMessage(Color.main("&aECO", "&aAdded " + amount + " coins to " + targetProfile.getUsername() + "'s balance."));
                                 break;
 
                                 case "points":
                                     targetProfile.getPlayerData().getPoints().increaseAmount(amount);
-                                    player.sendMessage(Color.main("&aECO", "&Added " + amount + " points to " + targetProfile.getUsername() + "'s balance."));
+                                    player.sendMessage(Color.main("&aECO", "&aAdded " + amount + " points to " + targetProfile.getUsername() + "'s balance."));
                                 break;
                             }
                         break;
@@ -109,7 +103,7 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
                                 case "coins":
                                     if (targetProfile.getPlayerData().getCoins().getAmount() >= amount) {
                                         targetProfile.getPlayerData().getCoins().decreaseAmount(amount);
-                                        player.sendMessage(Color.main("&aECO", "&Added " + amount + " coins to " + targetProfile.getUsername() + "'s balance."));
+                                        player.sendMessage(Color.main("&aECO", "&aRemoved " + amount + " coins from " + targetProfile.getUsername() + "'s balance."));
                                     } else {
                                         player.sendMessage(Color.main("&aECO", "&c" + targetProfile.getUsername() + " doesn't have that many coins."));
                                     }
@@ -118,7 +112,7 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
                                 case "points":
                                     if (targetProfile.getPlayerData().getPoints().getAmount() >= amount) {
                                         targetProfile.getPlayerData().getPoints().decreaseAmount(amount);
-                                        player.sendMessage(Color.main("&aECO", "&Added " + amount + " points to " + targetProfile.getUsername() + "'s balance."));
+                                        player.sendMessage(Color.main("&aECO", "&aRemoved " + amount + " points from " + targetProfile.getUsername() + "'s balance."));
                                     } else {
                                         player.sendMessage(Color.main("&aECO", "&c" + targetProfile.getUsername() + " doesn't have that many points."));
                                     }
@@ -127,7 +121,7 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
                         break;
 
                         default:
-                            player.sendMessage(Color.main("&aECO", "&cUsage: /bal <set|add|remove> <coins|points> <name> <int>"));
+                            player.sendMessage(Color.main("&aECO", "&cUsage: /bal <name> <set|add|remove> <coins|points> <int>"));
                         break;
                     }
                 }

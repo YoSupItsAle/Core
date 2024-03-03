@@ -6,6 +6,7 @@ import org.aledev.core.Managers.ChatManager;
 import org.aledev.core.Managers.ProfileManager;
 import org.aledev.core.Managers.SqlManager;
 import org.aledev.core.Models.PlayerData;
+import org.aledev.core.TabCompleters.BalanceTabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -48,5 +49,6 @@ public final class Core extends JavaPlugin {
 
     private void loadCommands(){
         getCommand("balance").setExecutor(new BalanceCommand(this));
+        getCommand("balance").setTabCompleter(new BalanceTabCompleter());
     }
 }
