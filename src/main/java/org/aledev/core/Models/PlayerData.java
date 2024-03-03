@@ -1,4 +1,5 @@
 package org.aledev.core.Models;
+import lombok.Getter;
 import org.aledev.core.Core;
 import org.aledev.core.Utils.Color;
 import org.bukkit.Bukkit;
@@ -17,11 +18,16 @@ import java.util.UUID;
 public class PlayerData implements Listener {
 
     private Core plugin = Core.getInstance();
+    @Getter
     private UUID uuid;
+    @Getter
     private String username;
+    @Getter
     private Int coins = new Int();
+    @Getter
     private Int points = new Int();
-    private Rank rank = Rank.MEMBER;
+    @Getter
+    private Rank rank = Rank.OWNER;
 
     public PlayerData(){
 
@@ -33,7 +39,6 @@ public class PlayerData implements Listener {
     }
 
     public void load(Player player){
-        System.out.println("LOADING");
         Core.getInstance().getSqlManager().select("SELECT * FROM players WHERE uuid = ?", resultSet -> {
             try {
                 if (resultSet.next()) {
@@ -43,7 +48,7 @@ public class PlayerData implements Listener {
                             player.getName(), player.getUniqueId().toString());
                 }else{
                     Core.getInstance().getSqlManager().execute("INSERT INTO players(uuid, name, coins, points, rank) VALUES (?, ?, ?, ?, ?)",
-                            player.getUniqueId().toString(), player.getName(), 0, 0, Rank.MEMBER.toString());
+                            player.getUniqueId().toString(), player.getName(), 0, 0, Rank.OWNER.toString());
                 }
             }catch (SQLException exception){
                 Color.log(Color.main("DEBUG", "There was an error loading player."));
@@ -52,7 +57,6 @@ public class PlayerData implements Listener {
     }
 
     public void save(Player player){
-        System.out.println("SAVING");
         Core.getInstance().getSqlManager().execute("UPDATE players SET coins = ?, points = ? WHERE uuid = ?", coins.getAmount(), points.getAmount(), player.getUniqueId().toString());
     }
 

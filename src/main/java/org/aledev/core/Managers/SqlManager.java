@@ -3,7 +3,7 @@ package org.aledev.core.Managers;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.aledev.core.Core;
-import org.aledev.core.Models.Manager;
+import org.aledev.core.Models.CoreManager;
 import org.aledev.core.Utils.Color;
 import org.bukkit.Bukkit;
 
@@ -11,7 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SqlManager extends Manager {
+public class SqlManager extends CoreManager {
 
     private HikariDataSource hikariDataSource;
 

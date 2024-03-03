@@ -1,5 +1,6 @@
 package org.aledev.core.Models;
 
+import lombok.Getter;
 import org.aledev.core.Utils.Color;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,8 +17,11 @@ public enum Rank {
 
 
 
+    @Getter
     private String name;
+    @Getter
     private ChatColor color;
+    @Getter
     private boolean bold, ital;
 
     private int level;
@@ -55,11 +59,11 @@ public enum Rank {
 
 
     public boolean isHigherOrEqualTo(Player player, Rank rank, boolean callback){
-        if(callback && this.level != rank.level){
-            player.sendMessage(Color.main("[PERMISSIONS]", "&cYou need to be rank " + rank.name() + " to use this command."));
+        if(callback && this.level < rank.level){
+            player.sendMessage(Color.main("&cPERMISSIONS", "&cYou need to be atleast rank " + rank.name() + " to use this command."));
             return false;
         }
-        if(this.level == rank.level){
+        if(this.level >= rank.level){
             return true;
         }
         return false;

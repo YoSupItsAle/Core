@@ -1,20 +1,23 @@
 package org.aledev.core.Managers;
 
 import org.aledev.core.Core;
-import org.aledev.core.Models.Manager;
+import org.aledev.core.Models.CoreManager;
 import org.aledev.core.Models.Profile;
+import org.aledev.core.Utils.Color;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ProfileManager extends Manager {
+public class ProfileManager extends CoreManager {
 
     private Map<UUID, Profile> profiles = new HashMap<>();
 
     public ProfileManager(Core plugin) {
         super(plugin);
+        Color.log("Enabled ProfileManager");
+
     }
 
     /**

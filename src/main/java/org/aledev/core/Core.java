@@ -1,6 +1,8 @@
 package org.aledev.core;
 
 import lombok.Getter;
+import org.aledev.core.Commands.BalanceCommand;
+import org.aledev.core.Managers.ChatManager;
 import org.aledev.core.Managers.ProfileManager;
 import org.aledev.core.Managers.SqlManager;
 import org.aledev.core.Models.PlayerData;
@@ -22,6 +24,7 @@ public final class Core extends JavaPlugin {
         instance = this;
         loadManagers();
         loadListeners();
+        loadCommands();
 
     }
 
@@ -40,5 +43,10 @@ public final class Core extends JavaPlugin {
 
     private void loadListeners(){
         getServer().getPluginManager().registerEvents(new PlayerData(), this);
+        getServer().getPluginManager().registerEvents(new ChatManager(this), this);
+    }
+
+    private void loadCommands(){
+        getCommand("balance").setExecutor(new BalanceCommand(this));
     }
 }

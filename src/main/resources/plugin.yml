@@ -2,3 +2,8 @@ name: Core
 version: '${project.version}'
 main: org.aledev.core.Core
 api-version: '1.20'
+commands:
+  balance:
+    aliases: ["bal"]
+    description: "Gets your balance"
+    usage: "/bal <set|add|remove|> <player> <quantity>"

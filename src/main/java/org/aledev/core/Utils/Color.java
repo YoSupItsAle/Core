@@ -17,10 +17,10 @@ public class Color {
     }
 
     public static String main(String module, String body){
-        return ChatColor.RED + "[" + module + "]" + " " + ChatColor.GRAY + Color.translate(body);
+        return ChatColor.GRAY + "[" + Color.translate(module) + ChatColor.GRAY + "]" + " " + ChatColor.WHITE + Color.translate(body);
     }
 
     public static void log(String message){
-        Bukkit.getConsoleSender().sendMessage(main("DEBUG", message));
+        Bukkit.getConsoleSender().sendMessage(main("&6DEBUG", message));
     }
 }
