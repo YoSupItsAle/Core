@@ -1,12 +1,11 @@
 package org.aledev.core;
 
 import lombok.Getter;
-import org.aledev.core.Commands.BalanceCommand;
-import org.aledev.core.Managers.ChatManager;
-import org.aledev.core.Managers.ProfileManager;
-import org.aledev.core.Managers.SqlManager;
-import org.aledev.core.Models.PlayerData;
-import org.aledev.core.TabCompleters.BalanceTabCompleter;
+import net.luckperms.api.LuckPerms;
+import org.aledev.core.Utils.ChatUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -16,39 +15,35 @@ public final class Core extends JavaPlugin {
     @Getter
     static Core instance;
     @Getter
-    SqlManager sqlManager;
-    @Getter
-    ProfileManager profileManager;
+    LuckPerms luckperms;
 
     @Override
     public void onEnable() {
         instance = this;
-        loadManagers();
-        loadListeners();
-        loadCommands();
+        ChatUtils.info("Core is starting up...");
+        loadLuckperms();
 
+
+        if(this.isEnabled()){
+            ChatUtils.info("Core started up correctly!");
+        }
     }
 
     @Override
     public void onDisable() {
-        if(sqlManager !=null){
-            sqlManager.shutdown();
+        ChatUtils.info("Core is shutting down...");
+    }
+
+    public void loadLuckperms(){
+        Plugin luckpermsPlugin = Bukkit.getPluginManager().getPlugin("LuckPerms");
+        if(luckpermsPlugin == null || !luckpermsPlugin.isEnabled()){
+            ChatUtils.error("Luckperms plugin not found or not enabled, disabling...");
+            Bukkit.getPluginManager().disablePlugin(this);
+        }else{
+            RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+            if(provider!=null){
+                luckperms = provider.getProvider();
+            }
         }
-    }
-
-    private void loadManagers(){
-        sqlManager = new SqlManager(this);
-        sqlManager.connect();
-        profileManager = new ProfileManager(this);
-    }
-
-    private void loadListeners(){
-        getServer().getPluginManager().registerEvents(new PlayerData(), this);
-        getServer().getPluginManager().registerEvents(new ChatManager(this), this);
-    }
-
-    private void loadCommands(){
-        getCommand("balance").setExecutor(new BalanceCommand(this));
-        getCommand("balance").setTabCompleter(new BalanceTabCompleter());
     }
 }
