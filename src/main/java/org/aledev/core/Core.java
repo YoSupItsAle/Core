@@ -2,11 +2,13 @@ package org.aledev.core;
 
 import lombok.Getter;
 import org.aledev.core.Commands.BalanceCommand;
+import org.aledev.core.Commands.PayCommand;
 import org.aledev.core.Managers.ChatManager;
 import org.aledev.core.Managers.ProfileManager;
 import org.aledev.core.Managers.SqlManager;
 import org.aledev.core.Models.PlayerData;
 import org.aledev.core.TabCompleters.BalanceTabCompleter;
+import org.aledev.core.TabCompleters.PayTabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -50,5 +52,8 @@ public final class Core extends JavaPlugin {
     private void loadCommands(){
         getCommand("balance").setExecutor(new BalanceCommand(this));
         getCommand("balance").setTabCompleter(new BalanceTabCompleter());
+
+        getCommand("pay").setExecutor(new PayCommand(this));
+        getCommand("pay").setTabCompleter(new PayTabCompleter());
     }
 }

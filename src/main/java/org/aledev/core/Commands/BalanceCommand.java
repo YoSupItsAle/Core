@@ -44,7 +44,7 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
 
                 if (profile.getPlayerData().getRank().isHigherOrEqualTo(player, Rank.ADMIN, true)) {
                     if (args.length < 4) {
-                        player.sendMessage(Color.main("&aECO", "&cUsage: /bal <name> <set|add|remove> <coins|points> <int>"));
+                        player.sendMessage(Color.main("&aECO", "&cUsage: /bal <player> <set|add|remove> <coins|points> <quantity>"));
                         return true;
                     }
 
@@ -57,7 +57,7 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
                     try{
                         amount = Integer.parseInt(args[3]);
                     }catch (NumberFormatException exception){
-                        player.sendMessage(Color.main("&aECO", "&cThe amount is not a valid number."));
+                        player.sendMessage(Color.main("&aECO", "&cThe quantity is not a valid number."));
                         return true;
                     }
 
@@ -121,7 +121,7 @@ public class BalanceCommand extends CoreCommand implements CommandExecutor{
                         break;
 
                         default:
-                            player.sendMessage(Color.main("&aECO", "&cUsage: /bal <name> <set|add|remove> <coins|points> <int>"));
+                            player.sendMessage(Color.main("&aECO", "&cUsage: /bal <player> <set|add|remove> <coins|points> <quantity>"));
                         break;
                     }
                 }
