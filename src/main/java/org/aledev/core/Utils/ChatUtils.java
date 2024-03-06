@@ -12,6 +12,7 @@ public class ChatUtils {
         Bukkit.getConsoleSender().sendMessage(ChatColor.BOLD + "[" + ChatColor.GOLD + "INFO" + ChatColor.WHITE + "] " + message);
     }
 
+
     public static void debug(String message){
         Bukkit.getConsoleSender().sendMessage(ChatColor.BOLD + "[" + ChatColor.GREEN + "DEBUG" + ChatColor.WHITE + "] " + message);
     }
