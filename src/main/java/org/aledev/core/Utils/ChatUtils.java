@@ -21,4 +21,12 @@ public class ChatUtils {
         Bukkit.getConsoleSender().sendMessage("[" + ChatColor.RED + "ERROR" + ChatColor.WHITE + "] " + message);
     }
 
+    public static void broadcast(String message){
+        Bukkit.broadcastMessage("[" + ChatColor.RED + "BROADCAST" + ChatColor.WHITE + "] " + message);
+    }
+
+    public static void printException(String message){
+        Bukkit.getConsoleSender().sendMessage(ChatColor.BOLD + "[" + ChatColor.DARK_PURPLE + "EXCEPTION" + ChatColor.WHITE + "] " + message);
+    }
+
 }
