@@ -41,7 +41,7 @@ public final class Core extends JavaPlugin {
     @Override
     public void onDisable() {
         ChatUtils.info("Core is shutting down...");
-        //databaseManager.shutdown();
+        databaseManager.shutdown();
         ChatUtils.info("Core shutted down correctly!");
     }
 

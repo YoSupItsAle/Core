@@ -10,14 +10,15 @@ import org.aledev.core.Utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
+import java.security.spec.ECField;
 import java.sql.*;
 import java.util.UUID;
 
 public class DatabaseManager extends Component {
 
     private final String DB_URL = "jdbc:mysql://localhost:3306/core";
-    private final String DB_USER = "root";
-    private final String DB_PASSWORD = "";
+    private final String DB_USER = "core";
+    private final String DB_PASSWORD = "core";
     @Getter
     Connection connection;
     private LuckPerms luckPerms;
@@ -28,11 +29,11 @@ public class DatabaseManager extends Component {
         initialize();
     }
 
-    public void initialize(){
-        try(Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)){
-            this.connection = conn;
+    public void initialize() {
+        try {
+            this.connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             createTables();
-        }catch (SQLException exception){
+        } catch (SQLException exception) {
             ChatUtils.printException(exception.getMessage());
             ChatUtils.error("Cannot connect to database, disabling...");
             Bukkit.getPluginManager().disablePlugin(plugin);
@@ -92,6 +93,7 @@ public class DatabaseManager extends Component {
                 statement.setInt(4, 0);
                 User user = luckPerms.getUserManager().getUser(profile.getUuid());
                 statement.setString(5, user.getPrimaryGroup());
+                statement.execute();
             }catch (SQLException exception){
                 ChatUtils.printException(exception.getMessage());
                 ChatUtils.error("Couldn't create new profile to database.");
@@ -99,13 +101,18 @@ public class DatabaseManager extends Component {
         }
     }
 
-    public ResultSet getProfileInfo(UUID uuid){
-        if(existsInDB(uuid)){
-            try{
+    public ResultSet getProfileInfo(UUID uuid) {
+        if (existsInDB(uuid)) {
+            try {
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM profiles WHERE uuid = ?");
                 statement.setString(1, uuid.toString());
-                return statement.executeQuery();
-            }catch (SQLException exception){
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet;
+                } else {
+                    throw new SQLException();
+                }
+            } catch (SQLException exception) {
                 ChatUtils.printException(exception.getMessage());
                 ChatUtils.error("Couldn't load profile from database.");
             }
@@ -124,7 +131,9 @@ public class DatabaseManager extends Component {
                 PreparedStatement statement = this.connection.prepareStatement("UPDATE profiles SET coins = ?, points = ?, rank = ? WHERE uuid = ?");
                 statement.setInt(1, profile.getCoins());
                 statement.setInt(2, profile.getPoints());
-                statement.setString(3, profile.getRank());
+                User user = luckPerms.getUserManager().getUser(profile.getUuid());
+                statement.setString(3, user.getPrimaryGroup());
+                statement.setString(4, profile.getUuid().toString());
                 statement.execute();
             }catch (SQLException exception){
                 ChatUtils.printException(exception.getMessage());
