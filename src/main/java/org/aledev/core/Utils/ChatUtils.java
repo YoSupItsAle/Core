@@ -3,6 +3,7 @@ package org.aledev.core.Utils;
 import org.aledev.core.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 
 public class ChatUtils {
 
@@ -27,6 +28,14 @@ public class ChatUtils {
 
     public static void printException(String message){
         Bukkit.getConsoleSender().sendMessage(ChatColor.BOLD + "[" + ChatColor.DARK_PURPLE + "EXCEPTION" + ChatColor.WHITE + "] " + message);
+    }
+
+    public static void sendUsage(CommandSender sender, String message){
+        sender.sendMessage(ChatColor.BOLD + "[" + ChatColor.RED + "USAGE" + ChatColor.WHITE + "] " + message);
+    }
+
+    public static void sendMessage(CommandSender sender, String module, String message){
+        sender.sendMessage(ChatColor.BOLD + "[" + module + ChatColor.RESET + "] " + message);
     }
 
 }

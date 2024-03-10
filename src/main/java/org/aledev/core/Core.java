@@ -2,6 +2,7 @@ package org.aledev.core;
 
 import lombok.Getter;
 import net.luckperms.api.LuckPerms;
+import org.aledev.core.Commands.BalanceCommand;
 import org.aledev.core.Listeners.PlayerJoinListener;
 import org.aledev.core.Listeners.PlayerQuitListener;
 import org.aledev.core.Managers.DatabaseManager;
@@ -32,6 +33,7 @@ public final class Core extends JavaPlugin {
         loadLuckperms();
         loadManagers();
         loadListeners();
+        loadCommands();
 
         if(this.isEnabled()){
             ChatUtils.info("Core started up correctly!");
@@ -66,6 +68,10 @@ public final class Core extends JavaPlugin {
     public void loadListeners(){
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+    }
+
+    public void loadCommands(){
+        getCommand("balance").setExecutor(new BalanceCommand(this, databaseManager));
     }
 
 }

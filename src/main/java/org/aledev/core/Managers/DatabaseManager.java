@@ -77,7 +77,21 @@ public class DatabaseManager extends Component {
             return resultSet.next();
         }catch (SQLException exception){
             ChatUtils.printException(exception.getMessage());
-            ChatUtils.error("Couldn't check if profile exists in database.");
+            ChatUtils.error("Couldn't check if uuid exists in database.");
+        }
+
+        return false;
+    }
+
+    public boolean existsInDB(String string){
+        try{
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM profiles WHERE username = ?");
+            statement.setString(1, string);
+            ResultSet resultSet = statement.executeQuery();
+            return  resultSet.next();
+        }catch (SQLException exception){
+            ChatUtils.printException(exception.getMessage());
+            ChatUtils.error("Couldn't check if username exists in database.");
         }
 
         return false;
@@ -114,15 +128,30 @@ public class DatabaseManager extends Component {
                 }
             } catch (SQLException exception) {
                 ChatUtils.printException(exception.getMessage());
-                ChatUtils.error("Couldn't load profile from database.");
+                ChatUtils.error("Couldn't get profile info from database.");
             }
         }
         return null;
     }
 
-    //public void getProfileInfo(String string){
-        //TODO to get coins, points and rank even if player is offline. (Same as getProfileInfo with uuid but with username.
-    //}
+    public ResultSet getProfileInfo(String string){
+        if(existsInDB(string)){
+            try{
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM PROFILES WHERE username = ?");
+                statement.setString(1, string);
+                ResultSet resultSet = statement.executeQuery();
+                if(resultSet.next()){
+                    return resultSet;
+                }else{
+                    throw new SQLException();
+                }
+            }catch (SQLException exception){
+                ChatUtils.printException(exception.getMessage());
+                ChatUtils.error("Couldn't get profile info from database.");
+            }
+        }
+        return  null;
+    }
 
 
     public void saveToDB(Profile profile){
